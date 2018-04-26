@@ -1,0 +1,169 @@
+
+* 01. ansible --list-hosts all
+[nigam@localhost Nigam_Ansible]$ ansible --list-hosts all
+ [WARNING]: provided hosts list is empty, only localhost is available. Note
+that the implicit localhost does not match 'all'
+
+  hosts (0):
+[nigam@localhost Nigam_Ansible]$ 
+
+
+
+* 02. ansible -i <host-file-name> --list-hosts all
+	ansible -i dev --list-hosts all
+
+[nigam@localhost Nigam_Ansible]$ ansible -i dev --list-hosts all
+  hosts (5):
+    control
+    db01
+    app01
+    app02
+    lb01
+[nigam@localhost Nigam_Ansible]$ 
+[nigam@localhost Nigam_Ansible]$ 
+
+
+* 03 [nigam@localhost Nigam_Ansible]$ ansible -i dev --list-hosts "*"
+  hosts (5):
+    control
+    db01
+    app01
+    app02
+    lb01
+[nigam@localhost Nigam_Ansible]$ 
+
+
+* 05 [nigam@localhost Nigam_Ansible]$ ansible --list-hosts loadbalancer
+  hosts (1):
+    lb01
+[nigam@localhost Nigam_Ansible]$ 
+[nigam@localhost Nigam_Ansible]$ ansible --list-hosts webserver
+  hosts (2):
+    app01
+    app02
+[nigam@localhost Nigam_Ansible]$ 
+[nigam@localhost Nigam_Ansible]$ ansible --list-hosts database
+  hosts (1):
+    db01
+[nigam@localhost Nigam_Ansible]$ 
+[nigam@localhost Nigam_Ansible]$ 
+
+* 06. [nigam@localhost Nigam_Ansible]$ ansible --list-hosts database,loadbalancer
+  hosts (2):
+    db01
+    lb01
+[nigam@localhost Nigam_Ansible]$ 
+[nigam@localhost Nigam_Ansible]$ ansible --list-hosts webserver,database
+  hosts (3):
+    app01
+    app02
+    db01
+[nigam@localhost Nigam_Ansible]$ 
+
+* 07. [nigam@localhost Nigam_Ansible]$ ansible --list-hosts webserver[0]
+  hosts (1):
+    app01
+[nigam@localhost Nigam_Ansible]$ 
+[nigam@localhost Nigam_Ansible]$ ansible --list-hosts \!loadbalancer
+  hosts (4):
+    db01
+    control
+    app01
+    app02
+[nigam@localhost Nigam_Ansible]$ 
+[nigam@localhost Nigam_Ansible]$
+
+
+
+
+[nigam@localhost Nigam_Ansible]$ ansible -m ping all
+control | SUCCESS => {
+    "changed": false, 
+    "ping": "pong"
+}
+db01 | UNREACHABLE! => {
+    "changed": false, 
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host db01 port 22: Connection timed out\r\n", 
+    "unreachable": true
+}
+app02 | UNREACHABLE! => {
+    "changed": false, 
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host app02 port 22: Connection timed out\r\n", 
+    "unreachable": true
+}
+lb01 | UNREACHABLE! => {
+    "changed": false, 
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host lb01 port 22: Connection timed out\r\n", 
+    "unreachable": true
+}
+app01 | UNREACHABLE! => {
+    "changed": false, 
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host app01 port 22: Connection timed out\r\n", 
+    "unreachable": true
+}
+[nigam@localhost Nigam_Ansible]$ 
+[nigam@localhost Nigam_Ansible]$ 
+
+======================
+LAB:
+
+
+* Creating and Image with Ansible on Ubuntu Container
+  ---------------------------------------------------
+	docker container run -it --name controlserver --net ansinet ubuntu bash
+	apt-get update 
+	apt-get install --no-install-recommends -y software-properties-common 
+	apt-add-repository ppa:ansible/ansible 
+	apt-get update 
+	apt-get install -y ansible
+
+	docker commit <container-id> nigamrout/ansible:ubuntu1604
+	docker login
+	docker push nigamrout/ansible:ubuntu1604
+
+
+
+Create Networ "ansinet"
+	docker network create ansinet
+
+Create a controlserver container in "ansinet" network with Ubintu image
+	docker container run -dit --name controlserver --net ansinet ubuntu bash
+
+Create a loadbalancer container in "ansinet" network with Ubintu image
+	docker container run -dit --name loadbalancer --net ansinet ubuntu bash
+
+Create two webserver container in "ansinet" network with Ubintu image
+	docker container run -dit --name webserver01 --net ansinet ubuntu bash
+	docker container run -dit --name webserver02 --net ansinet ubuntu bash
+
+Create two dbserver container in "ansinet" network with Ubintu image
+	docker container run -dit --name dbserver01 --net ansinet ubuntu bash
+	docker container run -dit --name dbserver02 --net ansinet ubuntu bash
+
+
+Adding host name to ansible Host file
+	echo 'controlserver' >> /etc/ansible/hosts
+	echo 'loadbalancer' >> /etc/ansible/hosts
+	echo 'webserver01' >> /etc/ansible/hosts
+	echo 'webserver02' >> /etc/ansible/hosts
+	echo 'dbserver01' >> /etc/ansible/hosts
+	echo 'dbserver02' >> /etc/ansible/hosts
+
+Stoppoing list of container
+	docker container stop controlserver
+	docker container stop loadbalancer
+	docker container stop webserver01
+	docker container stop webserver02
+	docker container stop dbserver01
+	docker container stop dbserver02
+
+Removing list of container
+	docker container rm -f controlserver
+	docker container rm -f loadbalancer
+	docker container rm -f webserver01
+	docker container rm -f webserver02
+	docker container rm -f dbserver01
+	docker container rm -f dbserver02
+
+
+
