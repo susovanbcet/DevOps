@@ -34,7 +34,6 @@
 *06 Get all the host name of all server in inventory list
 	ansible -m command -a "hostname"  all
 
-
 	docker run mynet123 -h mywebserver01 -it ubuntu bash
 
 	docker run mynet123 -h mywebserver01 -it ubuntu bash

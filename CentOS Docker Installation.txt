@@ -130,11 +130,9 @@ Docker Container
 
 Docker Images
 =============
-	List all Docker Images
+*	List all Docker Images
 	docker images -a
 		
-
-
 *	List of All docker Container-Images
 	docker image ls
 

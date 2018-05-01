@@ -108,6 +108,16 @@ app01 | UNREACHABLE! => {
 LAB:
 
 
+
+On Ubuntu/Debian/Linux Mint
+	apt-get install openssh-server openssh-client -y
+On RHEL/Centos/Fedora
+Type the following yum command to install openssh client and server.
+
+# yum -y install openssh-server openssh-clients
+
+
+
 # Latest Ubuntu LTS
 FROM ubuntu:14.04
 MAINTAINER Toshio Kuratomi <tkuratomi@ansible.com>
@@ -165,8 +175,6 @@ RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
 	docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
 	
 	=> docker container run -d -it --name sshserver --net ansinet -p 22 ubuntussh
-
-
 
 
 * Adding host name to ansible Host file
