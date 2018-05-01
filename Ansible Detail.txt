@@ -246,8 +246,8 @@ ssh-keygen -t rsa
 cd /home/devops/.ssh
 touch authorized_keys
 
-docker container run -it -d --name server --net ansinet -p 22 ubuntu bash
-docker exec -it server bash
+docker container run -it -d --name sshserver -p 22 nigamrout/ubuntussh bash
+docker exec -it sshserver bash
 
 --------------------------------------------------
 
