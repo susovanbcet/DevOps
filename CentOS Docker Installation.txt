@@ -1,1231 +1,76 @@
 [nigam@localhost ~]$ sudo su -
-Last login: Sat Apr  7 18:42:01 EDT 2018 on pts/0
-[root@localhost ~]# 
-[root@localhost ~]# 
 [root@localhost ~]# yum install -y yum-utils device-mapper-persistent-data lvm2
-Loaded plugins: fastestmirror, langpacks
-Loading mirror speeds from cached hostfile
- * base: mirrors.tripadvisor.com
- * epel: mirror.beyondhosting.net
- * extras: mirror.cc.columbia.edu
- * updates: ftp.osuosl.org
-Package yum-utils-1.1.31-42.el7.noarch already installed and latest version
-Package device-mapper-persistent-data-0.7.0-0.1.rc6.el7_4.1.x86_64 already installed and latest version
-Package 7:lvm2-2.02.171-8.el7.x86_64 already installed and latest version
-Nothing to do
 [root@localhost ~]# yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-Loaded plugins: fastestmirror, langpacks
-adding repo from: https://download.docker.com/linux/centos/docker-ce.repo
-grabbing file https://download.docker.com/linux/centos/docker-ce.repo to /etc/yum.repos.d/docker-ce.repo
-repo saved to /etc/yum.repos.d/docker-ce.repo
-[root@localhost ~]# 
 [root@localhost ~]# yum install docker-ce -y
-Loaded plugins: fastestmirror, langpacks
-docker-ce-stable                                                                        | 2.9 kB  00:00:00     
-docker-ce-stable/x86_64/primary_db                                                      |  12 kB  00:00:00     
-Loading mirror speeds from cached hostfile
- * base: mirrors.tripadvisor.com
- * epel: mirror.beyondhosting.net
- * extras: mirror.cc.columbia.edu
- * updates: ftp.osuosl.org
-Resolving Dependencies
---> Running transaction check
----> Package docker-ce.x86_64 0:18.03.0.ce-1.el7.centos will be installed
---> Processing Dependency: container-selinux >= 2.9 for package: docker-ce-18.03.0.ce-1.el7.centos.x86_64
---> Processing Dependency: pigz for package: docker-ce-18.03.0.ce-1.el7.centos.x86_64
---> Running transaction check
----> Package container-selinux.noarch 2:2.42-1.gitad8f0f7.el7 will be installed
----> Package pigz.x86_64 0:2.3.4-1.el7 will be installed
---> Finished Dependency Resolution
-
-Dependencies Resolved
-
-===============================================================================================================
- Package                    Arch            Version                            Repository                 Size
-===============================================================================================================
-Installing:
- docker-ce                  x86_64          18.03.0.ce-1.el7.centos            docker-ce-stable           35 M
-Installing for dependencies:
- container-selinux          noarch          2:2.42-1.gitad8f0f7.el7            extras                     32 k
- pigz                       x86_64          2.3.4-1.el7                        epel                       81 k
-
-Transaction Summary
-===============================================================================================================
-Install  1 Package (+2 Dependent packages)
-
-Total download size: 35 M
-Installed size: 151 M
-Downloading packages:
-(1/3): container-selinux-2.42-1.gitad8f0f7.el7.noarch.rpm                               |  32 kB  00:00:00     
-(2/3): pigz-2.3.4-1.el7.x86_64.rpm                                                      |  81 kB  00:00:00     
-warning: /var/cache/yum/x86_64/7/docker-ce-stable/packages/docker-ce-18.03.0.ce-1.el7.centos.x86_64.rpm: Header V4 RSA/SHA512 Signature, key ID 621e9f35: NOKEY
-Public key for docker-ce-18.03.0.ce-1.el7.centos.x86_64.rpm is not installed
-(3/3): docker-ce-18.03.0.ce-1.el7.centos.x86_64.rpm                                     |  35 MB  00:00:03     
----------------------------------------------------------------------------------------------------------------
-Total                                                                           10 MB/s |  35 MB  00:00:03     
-Retrieving key from https://download.docker.com/linux/centos/gpg
-Importing GPG key 0x621E9F35:
- Userid     : "Docker Release (CE rpm) <docker@docker.com>"
- Fingerprint: 060a 61c5 1b55 8a7f 742b 77aa c52f eb6b 621e 9f35
- From       : https://download.docker.com/linux/centos/gpg
-Running transaction check
-Running transaction test
-Transaction test succeeded
-Running transaction
-  Installing : pigz-2.3.4-1.el7.x86_64                                                                     1/3 
-  Installing : 2:container-selinux-2.42-1.gitad8f0f7.el7.noarch                                            2/3 
-  Installing : docker-ce-18.03.0.ce-1.el7.centos.x86_64                                                    3/3 
-  Verifying  : 2:container-selinux-2.42-1.gitad8f0f7.el7.noarch                                            1/3 
-  Verifying  : docker-ce-18.03.0.ce-1.el7.centos.x86_64                                                    2/3 
-  Verifying  : pigz-2.3.4-1.el7.x86_64                                                                     3/3 
-
-Installed:
-  docker-ce.x86_64 0:18.03.0.ce-1.el7.centos                                                                   
-
-Dependency Installed:
-  container-selinux.noarch 2:2.42-1.gitad8f0f7.el7                  pigz.x86_64 0:2.3.4-1.el7                 
-
-Complete!
-[root@localhost ~]# 
-[root@localhost ~]# 
-[root@localhost ~]# 
 [root@localhost ~]# systemctl start docker
-[root@localhost ~]# 
-[root@localhost ~]# 
 [root@localhost ~]# systemctl enable docker
-Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
-[root@localhost ~]# 
-[root@localhost ~]# 
-[root@localhost ~]# 
 [root@localhost ~]# usermod -aG docker nigam
-[root@localhost ~]# 
 [root@localhost ~]# exit
-logout
-[nigam@localhost ~]$ 
 [nigam@localhost ~]$ sudo docker run hello-world
-[sudo] password for nigam: ******
-Unable to find image 'hello-world:latest' locally
-latest: Pulling from library/hello-world
-ca4f61b1923c: Pull complete 
-Digest: sha256:97ce6fa4b6cdc0790cda65fe7290b74cfebd9fa0c9b8c38e979330d547d22ce1
-Status: Downloaded newer image for hello-world:latest
-
-Hello from Docker!
-This message shows that your installation appears to be working correctly.
-
-To generate this message, Docker took the following steps:
- 1. The Docker client contacted the Docker daemon.
- 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
-    (amd64)
- 3. The Docker daemon created a new container from that image which runs the
-    executable that produces the output you are currently reading.
- 4. The Docker daemon streamed that output to the Docker client, which sent it
-    to your terminal.
-
-To try something more ambitious, you can run an Ubuntu container with:
- $ docker run -it ubuntu bash
-
-Share images, automate workflows, and more with a free Docker ID:
- https://cloud.docker.com/
-
-For more examples and ideas, visit:
- https://docs.docker.com/engine/userguide/
- 
-[nigam@localhost ~]$ 
-[nigam@localhost ~]$ 
-[nigam@localhost ~]$ 
 [nigam@localhost ~]$ docker --version
 Docker version 18.03.0-ce, build 0520e24
 
 * Install Docke-Machine
 ========================
-
   base=https://github.com/docker/machine/releases/download/v0.14.0 &&
   curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
   sudo install /tmp/docker-machine /usr/local/bin/docker-machine
 
-
-[nigam@localhost ~]$ base=https://github.com/docker/machine/releases/download/v0.14.0 &&
->   curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
->   sudo install /tmp/docker-machine /usr/local/bin/docker-machine
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   617    0   617    0     0   2025      0 --:--:-- --:--:-- --:--:--  2029
-100 26.7M  100 26.7M    0     0  3566k      0  0:00:07  0:00:07 --:--:-- 4699k
-[sudo] password for nigam: 
-[nigam@localhost ~]$ 
 [nigam@localhost ~]$ docker-machine --version
-docker-machine version 0.14.0, build 89b8332
-[nigam@localhost ~]$ 
-[nigam@localhost ~]$ 
 
 
 * Install Docke-Compose
 ========================
-
-sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-
-
-[nigam@localhost ~]$ 
 [nigam@localhost ~]$ sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   617    0   617    0     0   2555      0 --:--:-- --:--:-- --:--:--  2560
-100 10.3M  100 10.3M    0     0  2732k      0  0:00:03  0:00:03 --:--:-- 3348k
-[nigam@localhost ~]$ 
-[nigam@localhost ~]$ 
-
-
-
-
-[root@localhost ~]# 
-[root@localhost ~]# 
-[root@localhost ~]# docker images --help
-
-Usage:	docker images [OPTIONS] [REPOSITORY[:TAG]]
-
-List images
-
-Options:
-  -a, --all             Show all images (default hides intermediate images)
-      --digests         Show digests
-  -f, --filter filter   Filter output based on conditions provided
-      --format string   Pretty-print images using a Go template
-      --no-trunc        Don't truncate output
-  -q, --quiet           Only show numeric IDs
-[root@localhost ~]# 
-[nigam@localhost ~]$ 
 [nigam@localhost ~]$ sudo su -
-Last login: Sat Apr  7 21:15:56 EDT 2018 on pts/0
-[root@localhost ~]# 
-[root@localhost ~]# 
 [root@localhost ~]# docker images --help
-
-Usage:	docker images [OPTIONS] [REPOSITORY[:TAG]]
-
-List images
-
-Options:
-  -a, --all             Show all images (default hides intermediate images)
-      --digests         Show digests
-  -f, --filter filter   Filter output based on conditions provided
-      --format string   Pretty-print images using a Go template
-      --no-trunc        Don't truncate output
-  -q, --quiet           Only show numeric IDs
-[root@localhost ~]# 
-[root@localhost ~]# 
 [root@localhost ~]# docker pull busybox 
-Using default tag: latest
-latest: Pulling from library/busybox
-f70adabe43c0: Pull complete 
-Digest: sha256:58ac43b2cc92c687a32c8be6278e50a063579655fe3090125dcb2af0ff9e1a64
-Status: Downloaded newer image for busybox:latest
-[root@localhost ~]# 
 [root@localhost ~]# docker run --detach --name server busybox
-57ff30f68a05df5834b6507f7361e3239a5ebc7d995d40577cc1a00c49553e88
-[root@localhost ~]# 
-[root@localhost ~]# 
-[root@localhost ~]# docker ps
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-[root@localhost ~]# 
-[root@localhost ~]# 
-[root@localhost ~]# 
-[root@localhost ~]# docker run --detach --name server busybox sh -c "while true; do sleep 5; done"
-docker: Error response from daemon: Conflict. The container name "/server" is already in use by container "57ff30f68a05df5834b6507f7361e3239a5ebc7d995d40577cc1a00c49553e88". You have to remove (or rename) that container to be able to reuse that name.
-See 'docker run --help'.
-[root@localhost ~]# 
-[root@localhost ~]# 
 [root@localhost ~]# docker rm server
-server
-[root@localhost ~]# 
 [root@localhost ~]# docker run --detach --name server busybox sh -c "while true; do sleep 5; done"
-91a21babc0acfae6749efa00eb21a6c067f235e55fb6194e704dc7b60e275491
-[root@localhost ~]# 
-[root@localhost ~]# docker ps
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
-91a21babc0ac        busybox             "sh -c 'while true; …"   8 seconds ago       Up 7 seconds                            server
-[root@localhost ~]# 
-[root@localhost ~]# 
-root@localhost ~]# 
 [root@localhost ~]# docker stop server
-server
 [root@localhost ~]# docker start server
-server
 [root@localhost ~]# docker restart server
-server
-[root@localhost ~]# 
-
 [root@localhost ~]# docker rm server
-server
-[root@localhost ~]# 
 [root@localhost ~]# docker run -itd --name server busybox
-76569853f2dd9c0e6d94b4bb1c78649a39217e63b29274a9b480d6736ce8b0a5
-[root@localhost ~]# 
-[root@localhost ~]# docker ps
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-76569853f2dd        busybox             "sh"                36 seconds ago      Up 35 seconds                           server
-[root@localhost ~]# 
-[root@localhost ~]# 
-[root@localhost ~]# docker attach server
-/ # 
-/ # 
+[root@localhost ~]# docker attach <container-id/name>
 / # df -h
-Filesystem                Size      Used Available Use% Mounted on
-overlay                  50.0G      5.1G     44.9G  10% /
-tmpfs                    64.0M         0     64.0M   0% /dev
-tmpfs                     7.7G         0      7.7G   0% /sys/fs/cgroup
-/dev/mapper/centos-root
-                         50.0G      5.1G     44.9G  10% /etc/resolv.conf
-/dev/mapper/centos-root
-                         50.0G      5.1G     44.9G  10% /etc/hostname
-/dev/mapper/centos-root
-                         50.0G      5.1G     44.9G  10% /etc/hosts
-shm                      64.0M         0     64.0M   0% /dev/shm
-tmpfs                    64.0M         0     64.0M   0% /proc/kcore
-tmpfs                    64.0M         0     64.0M   0% /proc/keys
-tmpfs                    64.0M         0     64.0M   0% /proc/timer_list
-tmpfs                    64.0M         0     64.0M   0% /proc/timer_stats
-tmpfs                    64.0M         0     64.0M   0% /proc/sched_debug
-tmpfs                     7.7G         0      7.7G   0% /proc/scsi
-tmpfs                     7.7G         0      7.7G   0% /sys/firmware
-/ # 
-/ # 
-/ # pwd
-/
-/ # 
-/ # id
-uid=0(root) gid=0(root) groups=10(wheel)
-/ # 
-/ # exit
-[root@localhost ~]# 
-[root@localhost ~]# docker ps
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-[root@localhost ~]# 
-[root@localhost ~]# 
 [root@localhost ~]# docker run -it --rm --net none busybox ifconfig
-lo        Link encap:Local Loopback  
-          inet addr:127.0.0.1  Mask:255.0.0.0
-          UP LOOPBACK RUNNING  MTU:65536  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1 
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-
-[root@localhost ~]# 
 [root@localhost ~]# docker run -it --rm --net bridge busybox ifconfig
-eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02  
-          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0
-          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:2 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0 
-          RX bytes:168 (168.0 B)  TX bytes:0 (0.0 B)
-
-lo        Link encap:Local Loopback  
-          inet addr:127.0.0.1  Mask:255.0.0.0
-          UP LOOPBACK RUNNING  MTU:65536  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1 
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-
-[root@localhost ~]# 
-[root@localhost ~]# 
 [root@localhost ~]# docker run -it --rm --net host busybox ifconfig
-docker0   Link encap:Ethernet  HWaddr 02:42:9D:01:1A:A8  
-          inet addr:172.17.0.1  Bcast:172.17.255.255  Mask:255.255.0.0
-          inet6 addr: fe80::42:9dff:fe01:1aa8/64 Scope:Link
-          UP BROADCAST MULTICAST  MTU:1500  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:3 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0 
-          RX bytes:0 (0.0 B)  TX bytes:258 (258.0 B)
-
-enp3s0    Link encap:Ethernet  HWaddr 74:D4:35:6B:D8:0F  
-          inet addr:192.168.1.250  Bcast:192.168.1.255  Mask:255.255.255.0
-          inet6 addr: fe80::3cc1:eccb:11f4:d511/64 Scope:Link
-          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:301306 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:160990 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000 
-          RX bytes:357354250 (340.7 MiB)  TX bytes:18641633 (17.7 MiB)
-
-lo        Link encap:Local Loopback  
-          inet addr:127.0.0.1  Mask:255.0.0.0
-          inet6 addr: ::1/128 Scope:Host
-          UP LOOPBACK RUNNING  MTU:65536  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1 
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-
-virbr0    Link encap:Ethernet  HWaddr 52:54:00:D3:55:AD  
-          inet addr:192.168.122.1  Bcast:192.168.122.255  Mask:255.255.255.0
-          UP BROADCAST MULTICAST  MTU:1500  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000 
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-
-wlp2s0    Link encap:Ethernet  HWaddr 54:27:1E:24:D1:28  
-          inet addr:192.168.1.251  Bcast:192.168.1.255  Mask:255.255.255.0
-          inet6 addr: fe80::f8b:904:c6a1:5835/64 Scope:Link
-          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:1765 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:196 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000 
-          RX bytes:456435 (445.7 KiB)  TX bytes:29103 (28.4 KiB)
-
-[root@localhost ~]# 
-[root@localhost ~]# docker ps
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-[root@localhost ~]# 
-[root@localhost ~]# 
-
-[root@localhost ~]# 
 [root@localhost ~]# docker run -itd --name webserver1 --net host httpd 
-Unable to find image 'httpd:latest' locally
-latest: Pulling from library/httpd
-f2b6b4884fc8: Pull complete 
-b58fe2a5c9f1: Pull complete 
-e797fea70c45: Pull complete 
-6c7b4723e810: Pull complete 
-02074013c987: Pull complete 
-4ad329af1f9e: Pull complete 
-0cc56b739fe0: Pull complete 
-Digest: sha256:b54c05d62f0af6759c0a9b53a9f124ea2ca7a631dd7b5730bca96a2245a34f9d
-Status: Downloaded newer image for httpd:latest
-9bf4ef958a5d5c4a5c99672aa8dcf7cb2071e4f3876a5e431c45dcd756adb08c
-[root@localhost ~]# 
-[root@localhost ~]# 
-
-
-[root@localhost ~]# 
 [root@localhost ~]# docker run -d --name webserver2 -p 8080:80 -v "$(pwd)":/user/local/apache2/htdocs httpd
-6e449679d4faffa05289005cd6f09f9fe3b8e54b74c047a4c70272381460b693
-[root@localhost ~]# 
-[root@localhost ~]# 
-[root@localhost ~]# docker ps
-CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS                  NAMES
-6e449679d4fa        httpd               "httpd-foreground"   35 seconds ago      Up 34 seconds       0.0.0.0:8080->80/tcp   webserver2
-[root@localhost ~]# 
-
-
-
-[root@localhost opt]# docker run -e MYSQL_ROOT_PASSWORD=admin \    
--e MYSQL_USER=wordpress \     
--e MYSQL_PASSWORD=wordpress \     
--e MYSQL_DATABASE=wp_database \    
--v wp_database:/var/lib/mysql \      
---name wordpressdb \  
--d mariadb
-Unable to find image 'mariadb:latest' locally
-latest: Pulling from library/mariadb
-f2b6b4884fc8: Already exists 
-26d8bdca4f3e: Pull complete 
-74f09e820cce: Pull complete 
-5390f1fe4554: Pull complete 
-3d3f1706a741: Pull complete 
-2942f66426ea: Pull complete 
-97ee11d39c75: Pull complete 
-590c46ef722b: Pull complete 
-32eb4b9666e5: Pull complete 
-fc883f98a064: Pull complete 
-bb8bee61bc1e: Pull complete 
-Digest: sha256:6135f5b851e7fe263dcf0edf3480cdab1ab28c4287e867c5d83fbe967412ea14
-Status: Downloaded newer image for mariadb:latest
-4ed29e63afcfac9096c623a9f09d09ab9171a84bbe8199d5a6fc7f14b1f19d25
-[root@localhost opt]# 
-[root@localhost opt]# 
 [root@localhost opt]# docker ps
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
-4ed29e63afcf        mariadb             "docker-entrypoint.s…"   8 seconds ago       Up 7 seconds        3306/tcp            wordpressdb
-[root@localhost opt]# 
-[root@localhost opt]# 
-[root@localhost opt]# 
-
-
 [root@localhost opt]# yum install mysql
-Loaded plugins: fastestmirror, langpacks
-FedoraPeople-sea                                                                                                                                 | 2.9 kB  00:00:00     
-adobe-linux-x86_64                                                                                                                               | 2.9 kB  00:00:00     
-base                                                                                                                                             | 3.6 kB  00:00:00     
-docker-ce-stable                                                                                                                                 | 2.9 kB  00:00:00     
-epel/x86_64/metalink                                                                                                                             |  16 kB  00:00:00     
-epel                                                                                                                                             | 4.7 kB  00:00:00     
-extras                                                                                                                                           | 3.4 kB  00:00:00     
-updates                                                                                                                                          | 3.4 kB  00:00:00     
-(1/2): epel/x86_64/updateinfo                                                                                                                    | 908 kB  00:00:00     
-(2/2): epel/x86_64/primary_db                                                                                                                    | 6.3 MB  00:00:04     
-Loading mirror speeds from cached hostfile
- * base: mirror.cogentco.com
- * epel: mirror.math.princeton.edu
- * extras: mirror.cc.columbia.edu
- * updates: ftp.osuosl.org
-Resolving Dependencies
---> Running transaction check
----> Package mariadb.x86_64 1:5.5.56-2.el7 will be installed
---> Finished Dependency Resolution
-
-Dependencies Resolved
-
-========================================================================================================================================================================
- Package                                Arch                                  Version                                         Repository                           Size
-========================================================================================================================================================================
-Installing:
- mariadb                                x86_64                                1:5.5.56-2.el7                                  base                                8.7 M
-
-Transaction Summary
-========================================================================================================================================================================
-Install  1 Package
-
-Total download size: 8.7 M
-Installed size: 49 M
-Is this ok [y/d/N]: y
-Downloading packages:
-mariadb-5.5.56-2.el7.x86_64.rpm                                                                                                                  | 8.7 MB  00:00:00     
-Running transaction check
-Running transaction test
-Transaction test succeeded
-Running transaction
-  Installing : 1:mariadb-5.5.56-2.el7.x86_64                                                                                                                        1/1 
-  Verifying  : 1:mariadb-5.5.56-2.el7.x86_64                                                                                                                        1/1 
-
-Installed:
-  mariadb.x86_64 1:5.5.56-2.el7                                                                                                                                         
-
-Complete!
-[root@localhost opt]# 
-
-
-
-[root@localhost opt]# 
 [root@localhost opt]# docker inspect wordpressdb 
-[
-    {
-        "Id": "4ed29e63afcfac9096c623a9f09d09ab9171a84bbe8199d5a6fc7f14b1f19d25",
-        "Created": "2018-04-08T20:16:19.580539886Z",
-        "Path": "docker-entrypoint.sh",
-        "Args": [
-            "mysqld"
-        ],
-        "State": {
-            "Status": "running",
-            "Running": true,
-            "Paused": false,
-            "Restarting": false,
-            "OOMKilled": false,
-            "Dead": false,
-            "Pid": 29972,
-            "ExitCode": 0,
-            "Error": "",
-            "StartedAt": "2018-04-08T20:16:19.975259407Z",
-            "FinishedAt": "0001-01-01T00:00:00Z"
-        },
-        "Image": "sha256:ca06ca3d8fad202d349385313610fa5c089c6471f060c68ca34075de069ab1dc",
-        "ResolvConfPath": "/var/lib/docker/containers/4ed29e63afcfac9096c623a9f09d09ab9171a84bbe8199d5a6fc7f14b1f19d25/resolv.conf",
-        "HostnamePath": "/var/lib/docker/containers/4ed29e63afcfac9096c623a9f09d09ab9171a84bbe8199d5a6fc7f14b1f19d25/hostname",
-        "HostsPath": "/var/lib/docker/containers/4ed29e63afcfac9096c623a9f09d09ab9171a84bbe8199d5a6fc7f14b1f19d25/hosts",
-        "LogPath": "/var/lib/docker/containers/4ed29e63afcfac9096c623a9f09d09ab9171a84bbe8199d5a6fc7f14b1f19d25/4ed29e63afcfac9096c623a9f09d09ab9171a84bbe8199d5a6fc7f14b1f19d25-json.log",
-        "Name": "/wordpressdb",
-        "RestartCount": 0,
-        "Driver": "overlay2",
-        "Platform": "linux",
-        "MountLabel": "",
-        "ProcessLabel": "",
-        "AppArmorProfile": "",
-        "ExecIDs": null,
-        "HostConfig": {
-            "Binds": [
-                "wp_database:/var/lib/mysql"
-            ],
-            "ContainerIDFile": "",
-            "LogConfig": {
-                "Type": "json-file",
-                "Config": {}
-            },
-            "NetworkMode": "default",
-            "PortBindings": {},
-            "RestartPolicy": {
-                "Name": "no",
-                "MaximumRetryCount": 0
-            },
-            "AutoRemove": false,
-            "VolumeDriver": "",
-            "VolumesFrom": null,
-            "CapAdd": null,
-            "CapDrop": null,
-            "Dns": [],
-            "DnsOptions": [],
-            "DnsSearch": [],
-            "ExtraHosts": null,
-            "GroupAdd": null,
-            "IpcMode": "shareable",
-            "Cgroup": "",
-            "Links": null,
-            "OomScoreAdj": 0,
-            "PidMode": "",
-            "Privileged": false,
-            "PublishAllPorts": false,
-            "ReadonlyRootfs": false,
-            "SecurityOpt": null,
-            "UTSMode": "",
-            "UsernsMode": "",
-            "ShmSize": 67108864,
-            "Runtime": "runc",
-            "ConsoleSize": [
-                0,
-                0
-            ],
-            "Isolation": "",
-            "CpuShares": 0,
-            "Memory": 0,
-            "NanoCpus": 0,
-            "CgroupParent": "",
-            "BlkioWeight": 0,
-            "BlkioWeightDevice": [],
-            "BlkioDeviceReadBps": null,
-            "BlkioDeviceWriteBps": null,
-            "BlkioDeviceReadIOps": null,
-            "BlkioDeviceWriteIOps": null,
-            "CpuPeriod": 0,
-            "CpuQuota": 0,
-            "CpuRealtimePeriod": 0,
-            "CpuRealtimeRuntime": 0,
-            "CpusetCpus": "",
-            "CpusetMems": "",
-            "Devices": [],
-            "DeviceCgroupRules": null,
-            "DiskQuota": 0,
-            "KernelMemory": 0,
-            "MemoryReservation": 0,
-            "MemorySwap": 0,
-            "MemorySwappiness": null,
-            "OomKillDisable": false,
-            "PidsLimit": 0,
-            "Ulimits": null,
-            "CpuCount": 0,
-            "CpuPercent": 0,
-            "IOMaximumIOps": 0,
-            "IOMaximumBandwidth": 0
-        },
-        "GraphDriver": {
-            "Data": {
-                "LowerDir": "/var/lib/docker/overlay2/81283e542ec9d965b20dd2cabe587f83e72652eaf448dbab5d4aea0acabb4c37-init/diff:/var/lib/docker/overlay2/72b6a6934d8782c5599ee2219816cad15a5ab0d7cfbea14b2f2a51c30cd0832d/diff:/var/lib/docker/overlay2/cf5acc9cb81edbf6ed6ade6877211f89647565ce600e6dc982fc7f85a543ad51/diff:/var/lib/docker/overlay2/eea5d187a99cc7d5160485f97422315e5ce95a1b90665ed4a3801aec1f39094c/diff:/var/lib/docker/overlay2/8b8b4af49d0e585d6e31d7348e26998b34e3b399593c8078c7a9753d219d6c13/diff:/var/lib/docker/overlay2/d7e109cfef628b47258bfd62264b11f62a5a3479297371b9e71893d57750850d/diff:/var/lib/docker/overlay2/1b205fefdf6cab1d3b15b67d9da352edec1656c5d63f660f0d1132c9698d50a7/diff:/var/lib/docker/overlay2/e6181e28953fbdb0317907ac02d3ca7f4bacf00cb5d5bdaa43334e198900d913/diff:/var/lib/docker/overlay2/074a6c08067bdda25f1f954c3ba97f1535b48cd939e4fcf6688a5f7ee4266271/diff:/var/lib/docker/overlay2/419eb6b945b3fa2ab02d6a2437d26777cdcb9fc3a9b550dedcbc4b04095349e1/diff:/var/lib/docker/overlay2/0cd7d4033ba7b4ab6de51170faaa0012167087874914c2d42a881d7efc33a0f5/diff:/var/lib/docker/overlay2/0d42327154d19be2c2509db8e2d64fcfdc27aa46ced0e85a0c307c13685bd515/diff",
-                "MergedDir": "/var/lib/docker/overlay2/81283e542ec9d965b20dd2cabe587f83e72652eaf448dbab5d4aea0acabb4c37/merged",
-                "UpperDir": "/var/lib/docker/overlay2/81283e542ec9d965b20dd2cabe587f83e72652eaf448dbab5d4aea0acabb4c37/diff",
-                "WorkDir": "/var/lib/docker/overlay2/81283e542ec9d965b20dd2cabe587f83e72652eaf448dbab5d4aea0acabb4c37/work"
-            },
-            "Name": "overlay2"
-        },
-        "Mounts": [
-            {
-                "Type": "volume",
-                "Name": "wp_database",
-                "Source": "/var/lib/docker/volumes/wp_database/_data",
-                "Destination": "/var/lib/mysql",
-                "Driver": "local",
-                "Mode": "z",
-                "RW": true,
-                "Propagation": ""
-            }
-        ],
-        "Config": {
-            "Hostname": "4ed29e63afcf",
-            "Domainname": "",
-            "User": "",
-            "AttachStdin": false,
-            "AttachStdout": false,
-            "AttachStderr": false,
-            "ExposedPorts": {
-                "3306/tcp": {}
-            },
-            "Tty": false,
-            "OpenStdin": false,
-            "StdinOnce": false,
-            "Env": [
-                "MYSQL_PASSWORD=wordpress",
-                "MYSQL_DATABASE=wp_database",
-                "MYSQL_ROOT_PASSWORD=admin",
-                "MYSQL_USER=wordpress",
-                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-                "GOSU_VERSION=1.10",
-                "GPG_KEYS=199369E5404BD5FC7D2FE43BCBCB082A1BB943DB \t430BDF5C56E7C94E848EE60C1C4CBDCDCD2EFD2A \t4D1BB29D63D98E422B2113B19334A25F8507EFA5",
-                "MARIADB_MAJOR=10.2",
-                "MARIADB_VERSION=10.2.14+maria~jessie"
-            ],
-            "Cmd": [
-                "mysqld"
-            ],
-            "ArgsEscaped": true,
-            "Image": "mariadb",
-            "Volumes": {
-                "/var/lib/mysql": {}
-            },
-            "WorkingDir": "",
-            "Entrypoint": [
-                "docker-entrypoint.sh"
-            ],
-            "OnBuild": null,
-            "Labels": {}
-        },
-        "NetworkSettings": {
-            "Bridge": "",
-            "SandboxID": "0433e2ba1ceaa5e44598dbaf141420956d4f468989075e72982a4748ec16cf49",
-            "HairpinMode": false,
-            "LinkLocalIPv6Address": "",
-            "LinkLocalIPv6PrefixLen": 0,
-            "Ports": {
-                "3306/tcp": null
-            },
-            "SandboxKey": "/var/run/docker/netns/0433e2ba1cea",
-            "SecondaryIPAddresses": null,
-            "SecondaryIPv6Addresses": null,
-            "EndpointID": "20057a8dd4a79bae58772dc84eb886d90a056098f72c7d2b519a5aab03bc4ce7",
-            "Gateway": "172.17.0.1",
-            "GlobalIPv6Address": "",
-            "GlobalIPv6PrefixLen": 0,
-            "IPAddress": "172.17.0.2",
-            "IPPrefixLen": 16,
-            "IPv6Gateway": "",
-            "MacAddress": "02:42:ac:11:00:02",
-            "Networks": {
-                "bridge": {
-                    "IPAMConfig": null,
-                    "Links": null,
-                    "Aliases": null,
-                    "NetworkID": "4c228603800173996686dfc77d15f0c9e2d29d373dda02bf7a07f0f42ad605cc",
-                    "EndpointID": "20057a8dd4a79bae58772dc84eb886d90a056098f72c7d2b519a5aab03bc4ce7",
-                    "Gateway": "172.17.0.1",
-                    "IPAddress": "172.17.0.2",
-                    "IPPrefixLen": 16,
-                    "IPv6Gateway": "",
-                    "GlobalIPv6Address": "",
-                    "GlobalIPv6PrefixLen": 0,
-                    "MacAddress": "02:42:ac:11:00:02",
-                    "DriverOpts": null
-                }
-            }
-        }
-    }
-]
-[root@localhost opt]# 
-
-
 [root@localhost opt]# yum install epel-release
-Loaded plugins: fastestmirror, langpacks
-Loading mirror speeds from cached hostfile
- * base: mirrors.tripadvisor.com
- * epel: ewr.edge.kernel.org
- * extras: mirror.cc.columbia.edu
- * updates: ftp.osuosl.org
-Package epel-release-7-11.noarch already installed and latest version
-Nothing to do
-[root@localhost opt]# 
-
-
-
-[root@localhost opt]# yum -y install ansible
-Loaded plugins: fastestmirror, langpacks
-Loading mirror speeds from cached hostfile
- * base: mirrors.tripadvisor.com
- * epel: ewr.edge.kernel.org
- * extras: mirror.cc.columbia.edu
- * updates: mirror.texas3006.com
-Resolving Dependencies
---> Running transaction check
----> Package ansible.noarch 0:2.5.0-2.el7 will be installed
---> Processing Dependency: PyYAML for package: ansible-2.5.0-2.el7.noarch
---> Processing Dependency: python-crypto for package: ansible-2.5.0-2.el7.noarch
---> Processing Dependency: python-httplib2 for package: ansible-2.5.0-2.el7.noarch
---> Processing Dependency: python-jinja2 for package: ansible-2.5.0-2.el7.noarch
---> Processing Dependency: python-keyczar for package: ansible-2.5.0-2.el7.noarch
---> Processing Dependency: python-paramiko for package: ansible-2.5.0-2.el7.noarch
---> Processing Dependency: python2-jmespath for package: ansible-2.5.0-2.el7.noarch
---> Processing Dependency: sshpass for package: ansible-2.5.0-2.el7.noarch
---> Running transaction check
----> Package PyYAML.x86_64 0:3.10-11.el7 will be installed
---> Processing Dependency: libyaml-0.so.2()(64bit) for package: PyYAML-3.10-11.el7.x86_64
----> Package python-httplib2.noarch 0:0.9.2-1.el7 will be installed
----> Package python-jinja2.noarch 0:2.7.2-2.el7 will be installed
---> Processing Dependency: python-babel >= 0.8 for package: python-jinja2-2.7.2-2.el7.noarch
---> Processing Dependency: python-markupsafe for package: python-jinja2-2.7.2-2.el7.noarch
----> Package python-keyczar.noarch 0:0.71c-2.el7 will be installed
----> Package python-paramiko.noarch 0:2.1.1-4.el7 will be installed
----> Package python2-crypto.x86_64 0:2.6.1-15.el7 will be installed
---> Processing Dependency: libtomcrypt.so.0()(64bit) for package: python2-crypto-2.6.1-15.el7.x86_64
----> Package python2-jmespath.noarch 0:0.9.0-3.el7 will be installed
----> Package sshpass.x86_64 0:1.06-2.el7 will be installed
---> Running transaction check
----> Package libtomcrypt.x86_64 0:1.17-26.el7 will be installed
---> Processing Dependency: libtommath >= 0.42.0 for package: libtomcrypt-1.17-26.el7.x86_64
---> Processing Dependency: libtommath.so.0()(64bit) for package: libtomcrypt-1.17-26.el7.x86_64
----> Package libyaml.x86_64 0:0.1.4-11.el7_0 will be installed
----> Package python-babel.noarch 0:0.9.6-8.el7 will be installed
----> Package python-markupsafe.x86_64 0:0.11-10.el7 will be installed
---> Running transaction check
----> Package libtommath.x86_64 0:0.42.0-6.el7 will be installed
---> Finished Dependency Resolution
-
-Dependencies Resolved
-
-=================================================================================================================================================
- Package                                 Arch                         Version                                 Repository                    Size
-=================================================================================================================================================
-Installing:
- ansible                                 noarch                       2.5.0-2.el7                             epel                         9.0 M
-Installing for dependencies:
- PyYAML                                  x86_64                       3.10-11.el7                             base                         153 k
- libtomcrypt                             x86_64                       1.17-26.el7                             extras                       224 k
- libtommath                              x86_64                       0.42.0-6.el7                            extras                        36 k
- libyaml                                 x86_64                       0.1.4-11.el7_0                          base                          55 k
- python-babel                            noarch                       0.9.6-8.el7                             base                         1.4 M
- python-httplib2                         noarch                       0.9.2-1.el7                             extras                       115 k
- python-jinja2                           noarch                       2.7.2-2.el7                             base                         515 k
- python-keyczar                          noarch                       0.71c-2.el7                             epel                         218 k
- python-markupsafe                       x86_64                       0.11-10.el7                             base                          25 k
- python-paramiko                         noarch                       2.1.1-4.el7                             extras                       268 k
- python2-crypto                          x86_64                       2.6.1-15.el7                            extras                       477 k
- python2-jmespath                        noarch                       0.9.0-3.el7                             extras                        39 k
- sshpass                                 x86_64                       1.06-2.el7                              extras                        21 k
-
-Transaction Summary
-=================================================================================================================================================
-Install  1 Package (+13 Dependent packages)
-
-Total download size: 12 M
-Installed size: 60 M
-Downloading packages:
-(1/14): libtommath-0.42.0-6.el7.x86_64.rpm                                                                                |  36 kB  00:00:00     
-(2/14): libtomcrypt-1.17-26.el7.x86_64.rpm                                                                                | 224 kB  00:00:00     
-(3/14): PyYAML-3.10-11.el7.x86_64.rpm                                                                                     | 153 kB  00:00:00     
-(4/14): python-httplib2-0.9.2-1.el7.noarch.rpm                                                                            | 115 kB  00:00:00     
-(5/14): libyaml-0.1.4-11.el7_0.x86_64.rpm                                                                                 |  55 kB  00:00:00     
-(6/14): python-markupsafe-0.11-10.el7.x86_64.rpm                                                                          |  25 kB  00:00:00     
-(7/14): python-jinja2-2.7.2-2.el7.noarch.rpm                                                                              | 515 kB  00:00:00     
-(8/14): python2-crypto-2.6.1-15.el7.x86_64.rpm                                                                            | 477 kB  00:00:00     
-(9/14): python2-jmespath-0.9.0-3.el7.noarch.rpm                                                                           |  39 kB  00:00:00     
-(10/14): python-babel-0.9.6-8.el7.noarch.rpm                                                                              | 1.4 MB  00:00:00     
-(11/14): sshpass-1.06-2.el7.x86_64.rpm                                                                                    |  21 kB  00:00:00     
-(12/14): python-paramiko-2.1.1-4.el7.noarch.rpm                                                                           | 268 kB  00:00:00     
-(13/14): python-keyczar-0.71c-2.el7.noarch.rpm                                                                            | 218 kB  00:00:00     
-(14/14): ansible-2.5.0-2.el7.noarch.rpm                                                                                   | 9.0 MB  00:00:02     
--------------------------------------------------------------------------------------------------------------------------------------------------
-Total                                                                                                            5.5 MB/s |  12 MB  00:00:02     
-Running transaction check
-Running transaction test
-Transaction test succeeded
-Running transaction
-  Installing : python-babel-0.9.6-8.el7.noarch                                                                                              1/14 
-  Installing : python-httplib2-0.9.2-1.el7.noarch                                                                                           2/14 
-  Installing : sshpass-1.06-2.el7.x86_64                                                                                                    3/14 
-  Installing : python-markupsafe-0.11-10.el7.x86_64                                                                                         4/14 
-  Installing : python-jinja2-2.7.2-2.el7.noarch                                                                                             5/14 
-  Installing : libtommath-0.42.0-6.el7.x86_64                                                                                               6/14 
-  Installing : libtomcrypt-1.17-26.el7.x86_64                                                                                               7/14 
-  Installing : python2-crypto-2.6.1-15.el7.x86_64                                                                                           8/14 
-  Installing : python-keyczar-0.71c-2.el7.noarch                                                                                            9/14 
-  Installing : python-paramiko-2.1.1-4.el7.noarch                                                                                          10/14 
-  Installing : python2-jmespath-0.9.0-3.el7.noarch                                                                                         11/14 
-  Installing : libyaml-0.1.4-11.el7_0.x86_64                                                                                               12/14 
-  Installing : PyYAML-3.10-11.el7.x86_64                                                                                                   13/14 
-  Installing : ansible-2.5.0-2.el7.noarch                                                                                                  14/14 
-  Verifying  : python-keyczar-0.71c-2.el7.noarch                                                                                            1/14 
-  Verifying  : libyaml-0.1.4-11.el7_0.x86_64                                                                                                2/14 
-  Verifying  : python-jinja2-2.7.2-2.el7.noarch                                                                                             3/14 
-  Verifying  : python2-jmespath-0.9.0-3.el7.noarch                                                                                          4/14 
-  Verifying  : python-paramiko-2.1.1-4.el7.noarch                                                                                           5/14 
-  Verifying  : ansible-2.5.0-2.el7.noarch                                                                                                   6/14 
-  Verifying  : PyYAML-3.10-11.el7.x86_64                                                                                                    7/14 
-  Verifying  : libtommath-0.42.0-6.el7.x86_64                                                                                               8/14 
-  Verifying  : python-markupsafe-0.11-10.el7.x86_64                                                                                         9/14 
-  Verifying  : sshpass-1.06-2.el7.x86_64                                                                                                   10/14 
-  Verifying  : python-httplib2-0.9.2-1.el7.noarch                                                                                          11/14 
-  Verifying  : python2-crypto-2.6.1-15.el7.x86_64                                                                                          12/14 
-  Verifying  : python-babel-0.9.6-8.el7.noarch                                                                                             13/14 
-  Verifying  : libtomcrypt-1.17-26.el7.x86_64                                                                                              14/14 
-
-Installed:
-  ansible.noarch 0:2.5.0-2.el7                                                                                                                   
-
-Dependency Installed:
-  PyYAML.x86_64 0:3.10-11.el7                    libtomcrypt.x86_64 0:1.17-26.el7               libtommath.x86_64 0:0.42.0-6.el7                
-  libyaml.x86_64 0:0.1.4-11.el7_0                python-babel.noarch 0:0.9.6-8.el7              python-httplib2.noarch 0:0.9.2-1.el7            
-  python-jinja2.noarch 0:2.7.2-2.el7             python-keyczar.noarch 0:0.71c-2.el7            python-markupsafe.x86_64 0:0.11-10.el7          
-  python-paramiko.noarch 0:2.1.1-4.el7           python2-crypto.x86_64 0:2.6.1-15.el7           python2-jmespath.noarch 0:0.9.0-3.el7           
-  sshpass.x86_64 0:1.06-2.el7                   
-
-Complete!
-[root@localhost opt]# 
-[root@localhost opt]# 
-
-
-[root@localhost opt]# 
+[root@localhost opt]# yum -y install ansibl
 [root@localhost opt]# ansible --version
-ansible 2.5.0
-  config file = /etc/ansible/ansible.cfg
-  configured module search path = [u'/root/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
-  ansible python module location = /usr/lib/python2.7/site-packages/ansible
-  executable location = /bin/ansible
-  python version = 2.7.5 (default, Aug  4 2017, 00:39:18) [GCC 4.8.5 20150623 (Red Hat 4.8.5-16)]
-[root@localhost opt]# 
-[root@localhost opt]# 
-[root@localhost opt]# 
-
-
 [root@localhost opt]# python --version
-Python 2.7.5
-[root@localhost opt]# 
 [root@localhost opt]# easy_install pip
-Searching for pip
-Reading https://pypi.python.org/simple/pip/
-Best match: pip 10.0.0b2
-Downloading https://pypi.python.org/packages/32/67/572f642e6e42c580d3154964cfbab7d9322c23b0f417c6c01fdd206a2777/pip-10.0.0b2.tar.gz#md5=cbfc1208d00bb72aba19431a7bb4afd5
-Processing pip-10.0.0b2.tar.gz
-Writing /tmp/easy_install-Hwq5Qc/pip-10.0.0b2/setup.cfg
-Running pip-10.0.0b2/setup.py -q bdist_egg --dist-dir /tmp/easy_install-Hwq5Qc/pip-10.0.0b2/egg-dist-tmp-XBMFyn
-/usr/lib64/python2.7/distutils/dist.py:267: UserWarning: Unknown distribution option: 'python_requires'
-  warnings.warn(msg)
-warning: no previously-included files found matching '.coveragerc'
-warning: no previously-included files found matching '.mailmap'
-warning: no previously-included files found matching '.travis.yml'
-warning: no previously-included files found matching '.landscape.yml'
-warning: no previously-included files found matching 'src/pip/_vendor/Makefile'
-warning: no previously-included files found matching 'tox.ini'
-warning: no previously-included files found matching '*-requirements.txt'
-warning: no previously-included files found matching 'appveyor.yml'
-warning: no previously-included files found matching 'src/pip/_vendor/six'
-warning: no previously-included files matching '*.pyi' found under directory 'src/pip/_vendor'
-no previously-included directories found matching '.github'
-no previously-included directories found matching '.travis'
-no previously-included directories found matching 'docs/build'
-no previously-included directories found matching 'news'
-no previously-included directories found matching 'contrib'
-no previously-included directories found matching 'tasks'
-no previously-included directories found matching 'tests'
-Adding pip 10.0.0b2 to easy-install.pth file
-Installing pip script to /usr/bin
-Installing pip2.7 script to /usr/bin
-Installing pip2 script to /usr/bin
-
-Installed /usr/lib/python2.7/site-packages/pip-10.0.0b2-py2.7.egg
-Processing dependencies for pip
-Finished processing dependencies for pip
-[root@localhost opt]# 
-[root@localhost opt]# 
-[root@localhost opt]# 
-
-[root@localhost ansible]# 
 [root@localhost ansible]# yum -y install epel-release
-Loaded plugins: fastestmirror, langpacks
-Loading mirror speeds from cached hostfile
- * base: centos.mirror.constant.com
- * epel: epel.mirror.constant.com
- * extras: mirror.wdc1.us.leaseweb.net
- * updates: mirrors.seas.harvard.edu
-Package epel-release-7-11.noarch already installed and latest version
-Nothing to do
 [root@localhost ansible]# yum -y groupinstall development 
-Loaded plugins: fastestmirror, langpacks
-There is no installed groups file.
-Maybe run: yum groups mark convert (see man yum)
-Loading mirror speeds from cached hostfile
- * base: centos.mirror.constant.com
- * epel: epel.mirror.constant.com
- * extras: mirror.wdc1.us.leaseweb.net
- * updates: mirrors.sorengard.com
-Maybe run: yum groups mark install (see man yum)
-Error: No packages in any requested group available to install or update
-[root@localhost ansible]# 
-[root@localhost ansible]# 
 [root@localhost ansible]# yum install curl-devel expat-devel gettext-devel openssl-devel
-Loaded plugins: fastestmirror, langpacks
-Loading mirror speeds from cached hostfile
- * base: centos.mirror.constant.com
- * epel: epel.mirror.constant.com
- * extras: mirror.wdc1.us.leaseweb.net
- * updates: mirrors.sorengard.com
-Package gettext-devel-0.19.8.1-2.el7.x86_64 already installed and latest version
-Resolving Dependencies
---> Running transaction check
----> Package expat-devel.x86_64 0:2.1.0-10.el7_3 will be installed
----> Package libcurl-devel.x86_64 0:7.29.0-42.el7_4.1 will be installed
----> Package openssl-devel.x86_64 1:1.0.2k-8.el7 will be installed
---> Processing Dependency: zlib-devel(x86-64) for package: 1:openssl-devel-1.0.2k-8.el7.x86_64
---> Processing Dependency: krb5-devel(x86-64) for package: 1:openssl-devel-1.0.2k-8.el7.x86_64
---> Running transaction check
----> Package krb5-devel.x86_64 0:1.15.1-8.el7 will be installed
---> Processing Dependency: libverto-devel for package: krb5-devel-1.15.1-8.el7.x86_64
---> Processing Dependency: libselinux-devel for package: krb5-devel-1.15.1-8.el7.x86_64
---> Processing Dependency: libcom_err-devel for package: krb5-devel-1.15.1-8.el7.x86_64
---> Processing Dependency: keyutils-libs-devel for package: krb5-devel-1.15.1-8.el7.x86_64
----> Package zlib-devel.x86_64 0:1.2.7-17.el7 will be installed
---> Running transaction check
----> Package keyutils-libs-devel.x86_64 0:1.5.8-3.el7 will be installed
----> Package libcom_err-devel.x86_64 0:1.42.9-10.el7 will be installed
----> Package libselinux-devel.x86_64 0:2.5-11.el7 will be installed
---> Processing Dependency: libsepol-devel(x86-64) >= 2.5-6 for package: libselinux-devel-2.5-11.el7.x86_64
---> Processing Dependency: pkgconfig(libsepol) for package: libselinux-devel-2.5-11.el7.x86_64
---> Processing Dependency: pkgconfig(libpcre) for package: libselinux-devel-2.5-11.el7.x86_64
----> Package libverto-devel.x86_64 0:0.2.5-4.el7 will be installed
---> Running transaction check
----> Package libsepol-devel.x86_64 0:2.5-6.el7 will be installed
----> Package pcre-devel.x86_64 0:8.32-17.el7 will be installed
---> Finished Dependency Resolution
-
-Dependencies Resolved
-
-=================================================================================================================================================
- Package                                  Arch                        Version                                 Repository                    Size
-=================================================================================================================================================
-Installing:
- expat-devel                              x86_64                      2.1.0-10.el7_3                          base                          57 k
- libcurl-devel                            x86_64                      7.29.0-42.el7_4.1                       updates                      300 k
- openssl-devel                            x86_64                      1:1.0.2k-8.el7                          base                         1.5 M
-Installing for dependencies:
- keyutils-libs-devel                      x86_64                      1.5.8-3.el7                             base                          37 k
- krb5-devel                               x86_64                      1.15.1-8.el7                            base                         266 k
- libcom_err-devel                         x86_64                      1.42.9-10.el7                           base                          31 k
- libselinux-devel                         x86_64                      2.5-11.el7                              base                         186 k
- libsepol-devel                           x86_64                      2.5-6.el7                               base                          74 k
- libverto-devel                           x86_64                      0.2.5-4.el7                             base                          12 k
- pcre-devel                               x86_64                      8.32-17.el7                             base                         480 k
- zlib-devel                               x86_64                      1.2.7-17.el7                            base                          50 k
-
-Transaction Summary
-=================================================================================================================================================
-Install  3 Packages (+8 Dependent packages)
-
-Total download size: 3.0 M
-Installed size: 6.6 M
-Is this ok [y/d/N]: y
-Is this ok [y/d/N]: y
-Downloading packages:
-(1/11): keyutils-libs-devel-1.5.8-3.el7.x86_64.rpm                                                                        |  37 kB  00:00:00     
-(2/11): libselinux-devel-2.5-11.el7.x86_64.rpm                                                                            | 186 kB  00:00:00     
-(3/11): libcom_err-devel-1.42.9-10.el7.x86_64.rpm                                                                         |  31 kB  00:00:00     
-(4/11): krb5-devel-1.15.1-8.el7.x86_64.rpm                                                                                | 266 kB  00:00:00     
-(5/11): libsepol-devel-2.5-6.el7.x86_64.rpm                                                                               |  74 kB  00:00:00     
-(6/11): libcurl-devel-7.29.0-42.el7_4.1.x86_64.rpm                                                                        | 300 kB  00:00:00     
-(7/11): libverto-devel-0.2.5-4.el7.x86_64.rpm                                                                             |  12 kB  00:00:00     
-(8/11): openssl-devel-1.0.2k-8.el7.x86_64.rpm                                                                             | 1.5 MB  00:00:00     
-(9/11): expat-devel-2.1.0-10.el7_3.x86_64.rpm                                                                             |  57 kB  00:00:00     
-(10/11): zlib-devel-1.2.7-17.el7.x86_64.rpm                                                                               |  50 kB  00:00:00     
-(11/11): pcre-devel-8.32-17.el7.x86_64.rpm                                                                                | 480 kB  00:00:00     
--------------------------------------------------------------------------------------------------------------------------------------------------
-Total                                                                                                            3.9 MB/s | 3.0 MB  00:00:00     
-Running transaction check
-Running transaction test
-Transaction test succeeded
-Running transaction
-  Installing : libsepol-devel-2.5-6.el7.x86_64                                                                                              1/11 
-  Installing : pcre-devel-8.32-17.el7.x86_64                                                                                                2/11 
-  Installing : libselinux-devel-2.5-11.el7.x86_64                                                                                           3/11 
-  Installing : libcom_err-devel-1.42.9-10.el7.x86_64                                                                                        4/11 
-  Installing : libverto-devel-0.2.5-4.el7.x86_64                                                                                            5/11 
-  Installing : keyutils-libs-devel-1.5.8-3.el7.x86_64                                                                                       6/11 
-  Installing : krb5-devel-1.15.1-8.el7.x86_64                                                                                               7/11 
-  Installing : zlib-devel-1.2.7-17.el7.x86_64                                                                                               8/11 
-  Installing : 1:openssl-devel-1.0.2k-8.el7.x86_64                                                                                          9/11 
-  Installing : expat-devel-2.1.0-10.el7_3.x86_64                                                                                           10/11 
-  Installing : libcurl-devel-7.29.0-42.el7_4.1.x86_64                                                                                      11/11 
-  Verifying  : zlib-devel-1.2.7-17.el7.x86_64                                                                                               1/11 
-  Verifying  : keyutils-libs-devel-1.5.8-3.el7.x86_64                                                                                       2/11 
-  Verifying  : libverto-devel-0.2.5-4.el7.x86_64                                                                                            3/11 
-  Verifying  : libselinux-devel-2.5-11.el7.x86_64                                                                                           4/11 
-  Verifying  : krb5-devel-1.15.1-8.el7.x86_64                                                                                               5/11 
-  Verifying  : libcom_err-devel-1.42.9-10.el7.x86_64                                                                                        6/11 
-  Verifying  : pcre-devel-8.32-17.el7.x86_64                                                                                                7/11 
-  Verifying  : libsepol-devel-2.5-6.el7.x86_64                                                                                              8/11 
-  Verifying  : 1:openssl-devel-1.0.2k-8.el7.x86_64                                                                                          9/11 
-  Verifying  : libcurl-devel-7.29.0-42.el7_4.1.x86_64                                                                                      10/11 
-  Verifying  : expat-devel-2.1.0-10.el7_3.x86_64                                                                                           11/11 
-
-Installed:
-  expat-devel.x86_64 0:2.1.0-10.el7_3           libcurl-devel.x86_64 0:7.29.0-42.el7_4.1           openssl-devel.x86_64 1:1.0.2k-8.el7          
-
-Dependency Installed:
-  keyutils-libs-devel.x86_64 0:1.5.8-3.el7          krb5-devel.x86_64 0:1.15.1-8.el7           libcom_err-devel.x86_64 0:1.42.9-10.el7         
-  libselinux-devel.x86_64 0:2.5-11.el7              libsepol-devel.x86_64 0:2.5-6.el7          libverto-devel.x86_64 0:0.2.5-4.el7             
-  pcre-devel.x86_64 0:8.32-17.el7                   zlib-devel.x86_64 0:1.2.7-17.el7          
-
-Complete!
-[root@localhost ansible]# 
-[root@localhost ansible]# 
-[root@localhost ansible]# ln -s /usr/bin/db2x_docbook2texi
-[root@localhost ansible]# /usr/bin/docbook2x-texi^C
-[root@localhost ansible]# ^C
-[root@localhost ansible]# ln -s /usr/bin/db2x_docbook2texi
-ln: failed to create symbolic link ‘./db2x_docbook2texi’: File exists
-[root@localhost ansible]# ^Csr/bin/docbook2x-texi/usr/bin/docbook2x-texi
-[root@localhost ansible]# 
-[root@localhost ansible]# 
 [root@localhost ansible]# ln -s /usr/bin/db2x_docbook2texi/usr/bin/docbook2x-texi
-[root@localhost ansible]# 
-[root@localhost ansible]# git clone https://git.kernel.org/pub/
-Cloning into 'pub'...
-fatal: repository 'https://git.kernel.org/pub/' not found
-[root@localhost ansible]# scm/git/git.git^C
-[root@localhost ansible]# 
-[root@localhost ansible]# 
-[root@localhost ansible]# pwd
-/etc/ansible
-[root@localhost ansible]# 
-[root@localhost ansible]# 
-[root@localhost ansible]# exit
-logout
-[nigam@localhost ~]$ 
-[nigam@localhost ~]$ 
-[nigam@localhost ~]$ 
-[nigam@localhost ~]$ 
-[nigam@localhost ~]$ pwd
-/home/nigam
-[nigam@localhost ~]$ 
 [nigam@localhost ~]$ git clone https://git.kernel.org/pub/scm/git/git.git
-Cloning into 'git'...
-remote: Counting objects: 242537, done.
-remote: Compressing objects: 100% (59031/59031), done.
-remote: Total 242537 (delta 181536), reused 242272 (delta 181324)
-Receiving objects: 100% (242537/242537), 55.80 MiB | 6.56 MiB/s, done.
-Resolving deltas: 100% (181536/181536), done.
-[nigam@localhost ~]$ 
-[nigam@localhost ~]$ make all doc prefix=/usr && sudo make install install-doc install-html install-man prefix=/usr
-make: *** No rule to make target `all'.  Stop.
 [nigam@localhost ~]$ sudo make all doc prefix=/usr && sudo make install install-doc install-html install-man prefix=/usr
-[sudo] password for nigam: 
-make: *** No rule to make target `all'.  Stop.
-[nigam@localhost ~]$ 
-[nigam@localhost ~]$ su -
-Password: 
-Last login: Sat Apr  7 22:49:06 EDT 2018 on pts/0
-ABRT has detected 1 problem(s). For more info run: abrt-cli list --since 1523155746
-[root@localhost ~]# 
-[root@localhost ~]# 
 [root@localhost ~]# make all doc prefix=/usr && sudo make install install-doc install-html install-man prefix=/usr
-make: *** No rule to make target `all'.  Stop.
-[root@localhost ~]# 
 
+-----------------------------------------------------------------------------------------------------------------------------
 
-
-
-
-
-[nigam@localhost ~]$ docker ps
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-
-
-[nigam@localhost ~]$ docker run -it -d --name ns3 busybox
-ebb5a8b50108f4309e39caf56f3e81ec4a464d2d11dc5ae2387e5d6929b6df41
-
-
-[nigam@localhost ~]$ 
-[nigam@localhost ~]$ docker ps
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-ebb5a8b50108        busybox             "sh"                4 seconds ago       Up 3 seconds                            ns3
-
-
-[nigam@localhost ~]$ docker attach ns3
-/ # 
-/ # 
-
-/ # pwd
-/
-
-/ # ls -lrt
-total 16
-drwxr-xr-x    2 root     root         12288 Apr  3 20:30 bin
-drwxr-xr-x    4 root     root            30 Apr  3 20:30 var
-drwxr-xr-x    3 root     root            18 Apr  3 20:30 usr
-drwxrwxrwt    2 root     root             6 Apr  3 20:30 tmp
-drwxr-xr-x    2 nobody   nogroup          6 Apr  3 20:30 home
-dr-xr-xr-x   13 root     root             0 Apr 15 04:48 sys
-dr-xr-xr-x  265 root     root             0 Apr 15 06:32 proc
-drwxr-xr-x    1 root     root            66 Apr 15 06:32 etc
-drwxr-xr-x    5 root     root           360 Apr 15 06:32 dev
-drwx------    1 root     root            26 Apr 15 06:32 root
-/ # 
-
-/ # df -h
-Filesystem                Size      Used Available Use% Mounted on
-overlay                  50.0G      9.4G     40.6G  19% /
-tmpfs                    64.0M         0     64.0M   0% /dev
-tmpfs                     7.7G         0      7.7G   0% /sys/fs/cgroup
-/dev/mapper/centos-root
-                         50.0G      9.4G     40.6G  19% /etc/resolv.conf
-/dev/mapper/centos-root
-                         50.0G      9.4G     40.6G  19% /etc/hostname
-/dev/mapper/centos-root
-                         50.0G      9.4G     40.6G  19% /etc/hosts
-shm                      64.0M         0     64.0M   0% /dev/shm
-tmpfs                    64.0M         0     64.0M   0% /proc/kcore
-tmpfs                    64.0M         0     64.0M   0% /proc/keys
-tmpfs                    64.0M         0     64.0M   0% /proc/timer_list
-tmpfs                    64.0M         0     64.0M   0% /proc/timer_stats
-tmpfs                    64.0M         0     64.0M   0% /proc/sched_debug
-tmpfs                     7.7G         0      7.7G   0% /proc/scsi
-tmpfs                     7.7G         0      7.7G   0% /sys/firmware
-/ # 
-/ # 
-/ # 
-
-
-
-[nigam@localhost ~]$ docker exec -it <container_name> bash
-			docker exec -it 019a76418dba bash
-
-
-
-* ---   Removing Docker Images
-		List all Docker Images
-		docker images -a
-		
-		Remove specified Docker Images
-		docker rmi <Image> 
-		
-		Remove All Docker Images
-		docker rmi $(docker images -a -q)
-
-
-
-* ---	Stop and remove containers
-		List All Docker Container
-		docker ps -a
-		
-		Stop A Docker Container 
-		docker stop <Container_ID>
-
-		Stop All Docker Container 
-		docker stop $(docker ps -a -q)
-
-		Remove A Docker Container 
-		docker rm <Container_ID>
-
-		Remove All Docker Container 
-		docker rm $(docker ps -a -q)
-
-
-* ---	List and remove Docker Volume
-		List All Docker Volume
-		docker volume ls
-
-		Remove A Docker Volume 
-		docker volume rm <volume_name>
-
-		Remove All Docker Container 
-		docker volume rm $(docker volume ls -q)
-
-=========================================================================
-
-
+Docker Container
+================
 *	Start a Container from image "nginx"
 	docker container run --publish 80:80 nginx
-
 
 *	Run in background --detach or -d
 	docker container run --publish 80:80 --detach nginx
 
 *	Stop a Container 
-	docker container stop <container id>
+	docker container stop <container-id>
+
+*	Stop All Docker Container 
+	docker container stop $(docker ps -a -q)
 
 *	Remove a Container
 	docker container rm <container-name/id>
@@ -1233,20 +78,21 @@ tmpfs                     7.7G         0      7.7G   0% /sys/firmware
 *	Remove a Container with FORCE STOP
 	docker container rm -f <container-name/id>
 
-
 *	Start a Container 
 		from image "nginx"
 		with name "webhost"
 		in background or detach mode (-d)
 		on Port Host-80:container-80
- 	
-	docker container run --publish 80:80 --detach --name webhost nginx
+ 	=> docker container run --publish 80:80 --detach --name webhost nginx
 
 *	List of Active docker Container 
 	docker container ls
 
 *	List of All docker Container 
 	docker container ls -a
+
+*	List all containers (only IDs)
+	docker ps -aq
 
 *	Check the log of a Container  
 	docker container logs <container-name/id>
@@ -1274,6 +120,21 @@ tmpfs                     7.7G         0      7.7G   0% /sys/firmware
 * 	Run addition command on existing Container
 	docker container exec -it
 
+*	Stop all running containers
+	docker container stop $(docker ps -aq)
+
+*	Remove all containers
+	docker container rm $(docker ps -aq)
+
+
+
+Docker Images
+=============
+	List all Docker Images
+	docker images -a
+		
+
+
 *	List of All docker Container-Images
 	docker image ls
 
@@ -1292,25 +153,18 @@ tmpfs                     7.7G         0      7.7G   0% /sys/firmware
 	docker image push [OPTIONS] NAME[:TAG]
 
 *	Build an image or a repository to a registry
-	*	Push an image or a repository to a registry
+*	Push an image or a repository to a registry
 	docker image push [OPTIONS] NAME[:TAG]
 
- [OPTIONS] NAME[:TAG]
+*	Creating docker image from a 'specified' docker file
+	docker build -f Dockerfile.dev 
+	docker build -t <usr-name>/<tag-name> -f <docker-file>
 
-
-
-
-
-
-
-*	List all containers (only IDs)
-	docker ps -aq
-
-*	Stop all running containers
-	docker stop $(docker ps -aq)
-
-*	Remove all containers
-	docker rm $(docker ps -aq)
+*	Remove specified Docker Images
+	docker rmi <Image> 
+		
+*	Remove All Docker Images
+	docker rmi $(docker images -a -q)
 
 *	Remove all images
 	docker rmi $(docker images -q)
@@ -1318,41 +172,52 @@ tmpfs                     7.7G         0      7.7G   0% /sys/firmware
 
 Assignment 1:
 ------------
-	1. Create 3 Containers
-		docker container run -d -p 3306:3306 --name dbserver -e MYSQL_ROOT_PASSWORD=root mysql
-		docker container run -d -p 8080:80 --name webserver httpd
-		docker container run -d -p 80:80 --name proxyhost nginx
+1. Create 3 Containers
+	docker container run -d -p 3306:3306 --name dbserver -e MYSQL_ROOT_PASSWORD=root mysql
+	docker container run -d -p 8080:80 --name webserver httpd
+	docker container run -d -p 80:80 --name proxyhost nginx
 
-	2. List All 3 Container
-		docker container ls -a
+2. List All 3 Container
+	docker container ls -a
 
-	3. Stop All 3 Container
-		docker container stop dbserver webserver proxyhost
+3. Stop All 3 Container
+	docker container stop dbserver webserver proxyhost
 
-	4. Remove All 3 Container
-		docker container rm dbserver webserver proxyhost 
-
-
-
+4. Remove All 3 Container
+	docker container rm dbserver webserver proxyhost 
 
 
 Docker Network
 ===============
 
-	Show Network 
+* Show Network 
 	docker network ls
 
-	Inspect a Network 
+* Inspect a Network 
 	docker network inspect
 
-	Create a Network 
+* Create a Network 
 	docker network create --driver
 
-	Attach a Network to Container
+* Attach a Network to Container
 	docker network connect
 
-	Detach a Network from Container
+* Detach a Network from Container
 	docker network disconnect
+
+* List port mappings or a specific mapping for the container
+	docker port CONTAINER [PRIVATE_PORT[/PROTO]]
+	docker port testserver 22
+
+* IP Address of Docker Container
+	docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_name_or_id>
+
+* IP Address of All Docker Container
+	docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -a -q)
+
+* All Docker Container Host Name and IP Address
+	docker ps -q | xargs -n 1 docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} {{ .Name }}' | sed 's/ \// /'
+
 
 Assignment 2:
 -------------
@@ -1370,31 +235,35 @@ Assignment 2:
 	docker container run --rm --net dude centos curl -s search:9200
 
 
+
 Docker Persistant : Data Volume
 ===============================
 
-
 * To List of volumes    
-    docker volume ls
-
-* To inspect a docker volumes    
-    docker volume inspect <volume_name>
-    docker volume inspect mysql-db
-
-* To remove a docker volumes    
-    docker volume rm <volume_name>
-    docker volume inspect mysql-db
-
-* To Create a Docker cointener with specified volumes 
-    docker container run -d -p 3306:3306 --name dbserver -e MYSQL_ROOT_PASSWORD=root -v mysql-db:/var/lib/mysql mysql
+	docker volume ls
 
 * To Create a docker volumes    
-    docker volume create <volume_name>
-    docker volume create myvolume1test
+	docker volume create <volume_name>
+	docker volume create myvolume1test
+
+* To inspect a docker volumes    
+	docker volume inspect <volume_name>
+	docker volume inspect mysql-db
+
+* To remove a docker volumes    
+	docker volume rm <volume_name>
+	docker volume inspect mysql-db
+
+* To remove All Docker Container 
+	docker volume rm $(docker volume ls -q)
+
+* To Create a Docker cointener with specified volumes 
+	docker container run -d -p 3306:3306 --name dbserver -e MYSQL_ROOT_PASSWORD=root -v mysql-db:/var/lib/mysql mysql
+
 
 
 Docker Persistant : Bind Mount
-===============================
+==============================
 
     docker container run -d --name psqldb1 -v psqlvol:/var/lib/postgresql/data postgres:9.6.1
     
@@ -1405,9 +274,9 @@ Docker Persistant : Bind Mount
     docker container run -d --name psqldb2 -v psqlvol:/var/lib/postgresql/data postgres:9.6.2
 
 
-
 Docker-Compose CLI
-===================
+==================
+
 * Bring Up docker container from default: docker-compose.yml file
     docker-compose up
 
@@ -1426,3 +295,9 @@ Docker-Compose CLI
 
 * Bring Down docker container from specified yml file with removing Networks and images
     docker-compose --file ./dc1.yml down -v --rmi all
+
+
+
+
+
+

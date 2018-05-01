@@ -21,10 +21,8 @@ CentOS Package Installation.
 
 
 5. 
-	sudo yum update
-	sudo yum apt-get install apt-transport-https ca-certificates curl software-properties-common 
-	
-	
+   sudo yum update
+   sudo yum apt-get install apt-transport-https ca-certificates curl software-properties-common 
 	
 1. Install latest Docker CE
    sudo su -
@@ -40,41 +38,42 @@ CentOS Package Installation.
 	usermod -aG docker nigam
 		
 	sudo docker run hello-world
+
 2.1 Docker Container lists
 	List of all containers that are currently running 
-		docker ps
+	docker ps
 
 	Llast active docker container 
-		docker ps -l
+	docker ps -l
 		
 	List of all containers that you ran. 
-		docker ps -a
+	docker ps -a
 
 3. List of Docker images 
-		sudo docker images
+	sudo docker images
 		
 4. Install/pull/download a new (busybox) images
-		docker pull busybox 
+	docker pull busybox 
 
 5. To create/run a Container out of (busybox) images
-		docker run --detach --name server busybox
+	docker run --detach --name server busybox
 
 6. To remove a container (named server)
-		docker rm server
+	docker rm server
 
 6.  docker run -d --name server busybox sh -c "while true; do sleep 5; done"
 		
 7.  To Stop a container named "server" 
-		docker stop server
+	docker stop server
 
 8.  To Strt a container named "server" 
-		docker start server
+	docker start server
 		
 9.  To restart a container named "server" 
-		docker restart server
+	docker restart server
 		
 10. To create/run a Container out of (busybox) images with interactive
-	 -i (for interactive). -t (TTY), -d (--detach run in the background) switch,
+	-i (for interactive). -t (TTY), -d (--detach run in the background) switch,
 	docker run -itd --name server busybox 
 		
 10.1 To attach a docker - So that we can go inside the container 
@@ -108,8 +107,6 @@ CentOS Package Installation.
 		  TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
 		  collisions:0 txqueuelen:1 
 		  RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-
-	[nigam@localhost ~]$ 
 
 12.  dgfdgfdgd
 	-d will create a container with the process detached from our terminal
@@ -151,9 +148,8 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
 14. -e option. This allows you to inject environment variables into the containers
-		docker run -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=wordpress -e MYSQL_DATABASE=wp_database -v wp_database:/var/lib/mysql --name wordpressdb -d mariadb
-		
-		docker run -e MYSQL_ROOT_PASSWORD=admin \
+	docker run -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=wordpress -e MYSQL_DATABASE=wp_database -v wp_database:/var/lib/mysql --name wordpressdb -d mariadb
+	docker run -e MYSQL_ROOT_PASSWORD=admin \
 						-e MYSQL_USER=wordpress \
 						-e MYSQL_PASSWORD=wordpress \
 						-e MYSQL_DATABASE=wp_database \
@@ -162,37 +158,31 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 						-d mariadb
 
 15. Install mysql client
-		yum install mysql
+	yum install mysql
 		
 16. To find out more about a Docker image (eg: wordpressdb or hello-world)
-		docker inspect wordpressdb 
-		docker inspect hello-world
+	docker inspect wordpressdb 
+	docker inspect hello-world
 	
 17. Connecting to MySQL of container. 
-		mysql -u <db_username> -pwordpress -h <db_ip_address>
-		mysql -u wordpress -pwordpress -h 172.17.0.2
+	mysql -u <db_username> -pwordpress -h <db_ip_address>
+	mysql -u wordpress -pwordpress -h 172.17.0.2
 		
 	
 18. Install Ansible on a Centos, 
-		Issue the following commands:
-			yum install epel-release
-			yum install ansible
-		If you want to install it using pip  (make sure Python is installed):
-			easy_install pip
-			pip install ansible
-		Verify Ansible installed 
-			ansible --version
+	Issue the following commands:
+		yum install epel-release
+		yum install ansible
+	If you want to install it using pip  (make sure Python is installed):
+		easy_install pip
+		pip install ansible
+	Verify Ansible installed 
+		ansible --version
 		
-
-
-
-
-
-
-	Install some prerequisites for Git 
-		sudo yum -y install epel-release 
-		sudo yum -y groupinstall development 
-		sudo yum install curl-devel expat-devel gettext-devel openssl-devel perl-devel zlib-devel asciidoc xmlto docbook2X
+19. Install some prerequisites for Git 
+	sudo yum -y install epel-release 
+	sudo yum -y groupinstall development 
+	sudo yum install curl-devel expat-devel gettext-devel openssl-devel perl-devel zlib-devel asciidoc xmlto docbook2X
 		
 	make a symbolic link: 
 		sudo ln -s /usr/bin/db2x_docbook2texi/usr/bin/docbook2x-texi

@@ -1,3 +1,6 @@
+## 
+## docker-compose --file ./dc1.yml down -v 
+##
 version: '3'
 
 # Defining All services
@@ -15,7 +18,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=rootpass
       - MYSQL_USER=nigam
-      - MYSQL_PASSWORD=nigampass
+      - MYSQL_PASSWORDnigampass
 
   #3. Defining Tomcat WebServer
   tomcat_serv:
