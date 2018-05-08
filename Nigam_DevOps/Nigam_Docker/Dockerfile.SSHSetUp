@@ -15,8 +15,8 @@
 
 FROM ubuntu as nigamssh
 
-MAINTAINER Nigam Rout <nigam.anand@gmail.com>
-LABEL maintainer="nigam.anand@gmail.com"
+MAINTAINER Nigam Rout <https://hub.docker.com/r/nigamrout>
+LABEL maintainer="https://hub.docker.com/r/nigamrout"
 
 # Upgrade Ubuntu
 RUN apt-get update -y
