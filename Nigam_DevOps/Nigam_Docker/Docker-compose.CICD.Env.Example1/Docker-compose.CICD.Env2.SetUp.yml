@@ -1,0 +1,30 @@
+# To Bring up the container mentioned in this yml file
+# docker-compose -f <Docker-Compose-File-Name> up -d
+# docker-compose -f Docker-compose.CICD.Env2.SetUp up -d
+
+# To Bring down the container mentioned in this yml file
+# docker-compose -f <Docker-Compose-File-Name> down
+# docker-compose -f Docker-compose.CICD.Env2.SetUp down
+
+
+# sonarqube
+# jenkins
+# docker.bintray.io/jfrog/artifactory-oss
+
+version: "3.2"
+# ========================================================================================
+services:
+  artifactory:
+    image: docker.bintray.io/jfrog/artifactory-oss
+    hostname: artifactory
+    container_name: artifactory
+    ports:
+      - "8081:8081"
+    environment:
+      TZ: America/New_York
+    networks:
+         - network2
+
+networks:
+  network1:
+  network2:
