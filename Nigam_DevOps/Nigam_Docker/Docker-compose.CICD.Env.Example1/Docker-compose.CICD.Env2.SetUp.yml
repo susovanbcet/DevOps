@@ -7,9 +7,13 @@
 # docker-compose -f Docker-compose.CICD.Env2.SetUp down
 
 
+
+
+# docker.bintray.io/jfrog/artifactory-oss
+# redmine  -- alternate to JIRA
+# google/cadvisor:latest
 # sonarqube
 # jenkins
-# docker.bintray.io/jfrog/artifactory-oss
 
 version: "3.2"
 # ========================================================================================
@@ -24,6 +28,50 @@ services:
       TZ: America/New_York
     networks:
          - network2
+
+  cadvisor:
+    image: google/cadvisor:latest
+    hostname: cadvisor
+    container_name: cadvisor
+    ports:
+      - "8082:8080"
+    environment:
+      TZ: America/New_York
+    networks:
+         - network2
+
+  sonarqube:
+    image: sonarqube
+    hostname: sonarqube
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+    environment:
+      TZ: America/New_York
+      SONARQUBE_JDBC_USERNAME: sonar
+      SONARQUBE_JDBC_PASSWORD: sonar
+      SONARQUBE_JDBC_URL: "jdbc:postgresql://localhost/sonar"
+    networks:
+         - network2
+
+
+  redmine:
+    image: redmine
+    restart: always
+    ports:
+      - 8080:3000
+    environment:
+      REDMINE_DB_MYSQL: db
+      REDMINE_DB_PASSWORD: example
+
+  redmine-db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: redmine
+
 
 networks:
   network1:

@@ -1,10 +1,10 @@
 # To Bring up the container mentioned in this yml file
 # docker-compose -f <Docker-Compose-File-Name> up -d
-# docker-compose -f Docker-Compose.CICD.yml up -d
+# docker-compose -f Docker-compose.CICD.Env1.SetUp.yml up -d
 
 # To Bring down the container mentioned in this yml file
 # docker-compose -f <Docker-Compose-File-Name> down
-# docker-compose -f Docker-Compose.CICD.yml down
+# docker-compose -f Docker-compose.CICD.Env1.SetUp.yml down
 
 
 
@@ -17,11 +17,12 @@ version: "3.2"
 services:
   web_server_nginx:
     image: nginx:alpine
-#    build:
-#      context: .
-#      dockerfile: Dockerfile.nginx
-#      args:
-#        buildno: umesh
+    build:
+      context: .
+      dockerfile: Dockerfile.CICD.Env1.NGINX
+      args:
+        buildno: umesh
+    image: nigamrout/cicd.env1.nginx_1
     hostname: web_server
     container_name: web_server
     ports:
@@ -40,9 +41,10 @@ services:
   app_server_tomcat1:
     build:
       context: .
-      dockerfile: Dockerfile.Tomcat_8.5.31
+      dockerfile: Dockerfile.CICD.Env1.Tomcat_8.5.31
       args:
         buildno: umesh
+    image: nigamrout/cicd.env1.tomcat_1_8.5.31
     #image: tomcat:8.5.31
     hostname: app_server1
     container_name: app_server1
@@ -66,9 +68,10 @@ services:
   app_server_tomcat2:
     build:
       context: .
-      dockerfile: Dockerfile.Tomcat_8.5.31
+      dockerfile: Dockerfile.CICD.Env1.Tomcat_8.5.31
       args:
         buildno: umesh
+    image: nigamrout/cicd.env1.tomcat_2_8.5.31
     #image: tomcat:8.5.31
     hostname: app_server2
     container_name: app_server2
@@ -94,9 +97,10 @@ services:
     #image: mariadb
     build:
       context: .
-      dockerfile: Dockerfile.MySQL
+      dockerfile: Dockerfile.CICD.Env1.MySQL
       args:
         buildno: umesh
+    image: nigamrout/cicd.env1.mysql_1
     hostname: db_server
     container_name: db_server
     ports:
